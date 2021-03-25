@@ -10,11 +10,11 @@
 					<i class="bi bi-pen-fill"></i>
 					Stwórz nową notatkę
 				</button>
-				<div class="alert alert-secondary m-3 text-center">
+				<div v-if="notes.length == 0" class="alert alert-secondary m-3 text-center">
 					<i class="bi bi-emoji-frown"></i>
 					Jeszcze nie ma żadnych notatek do wyświetlenia
 				</div>
-				<notes-list v-bind:notes="notes" v-on:onShowNote="showNote($event)"></notes-list>
+				<notes-list v-else v-bind:notes="notes" v-on:onShowNote="showNote($event)" v-on:onDeleteNote="deleteNote($event)"></notes-list>
 			</div>
 			<div class="col-12 col-md-7 col-lg-8 bg-white p-0">
 				<div class="cover d-none d-sm-block"></div>
@@ -58,6 +58,12 @@
 	},
 	showNotAddForm: function (){
 	this.currentNote = null;
+	},
+	deleteNote: function (note){
+	this.notes = this.notes.filter((n) => n !== note);
+	if (this.currentNote == note){
+	this.currentNote = null;
+	}
 	},
 	},
 	}
